@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**", // যেকোনো ডোমেইন থেকে ছবি ব্যবহারের সুযোগ দিবে
+        hostname: "**", 
       },
     ],
   },

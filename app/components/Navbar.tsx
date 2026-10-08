@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import NavLink from "./NavLink";
 import Dates from "./Dates";
+import { Suspense } from "react";
 export const dynamic = "force-dynamic";
 
 export interface Category {
@@ -63,7 +64,9 @@ const Navbar = async () => {
           </div>
         </div>
 
-        <NavLink data={data}></NavLink>
+        <Suspense fallback={<div className="h-10 bg-gray-50 animate-pulse rounded-lg" />}>
+          <NavLink data={data} />
+        </Suspense>
       </div>
     </header>
   );
