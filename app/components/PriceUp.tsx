@@ -52,10 +52,10 @@ const PriceUp = async () => {
                 <p className="text-xs text-gray-500 font-medium">
                   প্রতি
                   {product.unit === "kg"
-                    ? "কেজি"
-                    : product.unit === "doz"
-                      ? "ডজন"
-                      : product.unit}
+                    ? " কেজি"
+                    : product.unit === "dozen"
+                      ? " ডজন"
+                      : product.unit === 'piece' ? ' পিস' : product.unit}
                 </p>
               </div>
             </div>
