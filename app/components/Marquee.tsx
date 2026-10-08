@@ -57,16 +57,21 @@ const Marquee = async () => {
         {data.map((d) => {
           const isUp = d.change.dir === "up";
           return (
-            <div
-              key={d.id}
-              className="flex items-center gap-2 mx-4 text-sm font-medium text-gray-800 whitespace-nowrap"
-            >
-              
+            <Link key={d.id} href={`/product/${d.id}`}>
+              <div className="flex items-center gap-2 mx-4 text-sm font-medium text-gray-800 whitespace-nowrap hover:underline">
                 <span>{d.image}</span>
                 <span className="font-bold">{d.nameBn}</span>
                 <span>
                   {toBanglaNumber(d.today)} টাকা/
-                  {d.unit === "kg" ? "কেজি" : d.unit}
+                  {d.unit === "kg"
+                    ? "কেজি"
+                    : d.unit === "litre"
+                      ? "লিটার"
+                      : d.unit === "dozen"
+                        ? "ডজন"
+                        : d.unit === "piece"
+                          ? "পিস"
+                          : d.unit}
                 </span>
                 <span
                   className={`flex items-center gap-0.5 text-xs font-semibold ${
@@ -75,8 +80,8 @@ const Marquee = async () => {
                 >
                   {isUp ? "▲" : "▼"} {toBanglaNumber(d.change.pct)}%
                 </span>
-              
-            </div>
+              </div>
+            </Link>
           );
         })}
       </MarqueeText>

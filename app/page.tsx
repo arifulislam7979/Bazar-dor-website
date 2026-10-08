@@ -1,7 +1,8 @@
 import AllProduct from "./components/AllProduct";
 import Header from "./components/Header";
+import PriceDown from "./components/PriceDown";
 import PriceUp from "./components/PriceUp";
-import PriceDown from "./PriceDown";
+
 
 export default function Home() {
   return (

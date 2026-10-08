@@ -1,4 +1,6 @@
-import { Product } from "./components/Marquee";
+import Link from "next/link";
+import { Product } from "./Marquee";
+
 
 const toBanglaNumber = (num: number | string) => {
   const banglaDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
@@ -36,13 +38,14 @@ const PriceDown = async () => {
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {downProduct.slice(0, 6).map((product) => (
-          <div
-            key={product.id}
-            className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-4"
+          <Link key={product.id} href={`/product/${product.id}`}>
+            <div
+            
+            className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-4 hover:border-green-500"
           >
             
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
+              <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-2xl">
                 {product.image}
               </div>
               <div>
@@ -74,6 +77,7 @@ const PriceDown = async () => {
               </div>
             </div>
           </div>
+          </Link>
         ))}
       </div>
     </div>
