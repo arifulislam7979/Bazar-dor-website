@@ -1,7 +1,6 @@
 import MarqueeText from "react-marquee-text";
 import "react-marquee-text/dist/styles.css";
 
-// ইংরেজি সংখ্যাকে বাংলায় রূপান্তর করার ফাংশন
 const toBanglaNumber = (num: number | string) => {
   const banglaDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
   return num
