@@ -1,6 +1,7 @@
-import { use, Suspense } from "react";
+import { Suspense } from "react";
 import { Product } from "@/app/components/Marquee";
 import CategoryProducts from "@/app/components/CategoryProduct";
+import { notFound } from "next/navigation";
 
 interface CategoryPageProps {
   params: Promise<{
@@ -8,7 +9,8 @@ interface CategoryPageProps {
   }>;
 }
 
-async function CategoryContent({ categorySlug }: { categorySlug: string }) {
+async function CategoryContent({ params }: CategoryPageProps) {
+  const {categorySlug} = await params
   const res = await fetch(
     `https://api.api-store.workers.dev/api/bazardor/products?category=${categorySlug}`,
     { next: { revalidate: 3600 } },
@@ -22,13 +24,13 @@ async function CategoryContent({ categorySlug }: { categorySlug: string }) {
   }
   const products: Product[] = await res.json();
 
+  if (!products || products.length === 0) {
+    notFound();
+  }
+
   return <CategoryProducts products={products} />;
 }
 
-function CategoryWrapper({ params }: CategoryPageProps) {
-  const { categorySlug } = use(params);
-  return <CategoryContent categorySlug={categorySlug} />;
-}
 
 export default function CategoryPage({ params }: CategoryPageProps) {
   return (
@@ -40,7 +42,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           </div>
         }
       >
-        <CategoryWrapper params={params} />
+        <CategoryContent params={params} />
       </Suspense>
     </div>
   );

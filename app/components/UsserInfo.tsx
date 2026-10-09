@@ -7,17 +7,25 @@ import Image from "next/image";
 import { Popover, PopoverTrigger, PopoverContent, } from "@heroui/react";
 import { FaUser, FaSignOutAlt, FaChevronDown } from "react-icons/fa";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const UserInfo = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { data: session } = authClient.useSession();
+  const { data: session , isPending} = authClient.useSession();
   const user = session?.user;
   const router = useRouter();
 
   const handleSignOut = async () => {
     await signOut();
-    router.refresh();
+    toast.success("সফলভাবে সাইন আউট হয়েছে!");
   };
+  if (isPending) {
+    return (
+      <div className="flex items-center gap-2">
+        <div className="w-24 h-9 bg-green-100 animate-pulse rounded-full" />
+      </div>
+    );
+  }
 
   return (
     <div>

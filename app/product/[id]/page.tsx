@@ -1,6 +1,7 @@
-import { use, Suspense } from "react";
+import {Suspense } from "react";
 import Link from "next/link";
 import { Product } from "@/app/components/Marquee";
+import { notFound } from "next/navigation";
 
 interface ProductDetailsProps {
   params: Promise<{ id: string }>;
@@ -15,27 +16,26 @@ const toBanglaNumber = (num: number | string) => {
     .join("");
 };
 
-async function ProductDetailsContent({ id }: { id: string }) {
+async function ProductDetailsContent({ params }: ProductDetailsProps) {
+  const {id} = await params
   const res = await fetch(
     `https://api.api-store.workers.dev/api/bazardor/products/${id}`,
     { next: { revalidate: 3600 } },
   );
 
   if (!res.ok) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 py-12 text-center text-gray-500">
-        পণ্যটি পাওয়া যায়নি।
-      </div>
-    );
+    notFound()
   }
 
   const product: Product = await res.json();
+  if (!product || !product.id) {
+    notFound();
+  }
 
   const isUp = product.change?.dir === "up";
   const isDown = product.change?.dir === "down";
 
-  const diffRaw = product.today - product.yesterday;
-  const priceDiff = diffRaw < 0 ? -diffRaw : diffRaw;
+  const priceDiff = Math.abs(product.today - product.yesterday);
 
   const marketPrices = product.markets?.map((m) => (m.min + m.max) / 2);
 
@@ -164,26 +164,26 @@ async function ProductDetailsContent({ id }: { id: string }) {
           বাজারভিত্তিক আজকের দাম
         </h2>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs md:text-sm">
+        <div className="overflow-x-auto border rounded-2xl pt-4">
+          <table className="w-full text-left text-xs md:text-sm ">
             <thead>
               <tr className="text-gray-400 border-b border-gray-100">
-                <th className="pb-3 font-semibold">বাজার</th>
+                <th className="pb-3 font-semibold pl-4">বাজার</th>
                 <th className="pb-3 font-semibold">বিভাগ</th>
                 <th className="pb-3 font-semibold text-center">সর্বনিম্ন</th>
                 <th className="pb-3 font-semibold text-center">সর্বাধিক</th>
-                <th className="pb-3 font-semibold text-right">গড়</th>
+                <th className="pb-3 font-semibold text-right pr-4">গড়</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-[#6F7771]">
               {product.markets?.map((m, idx) => {
                 const marketAvg = ((m.min + m.max) / 2).toFixed(2);
                 return (
                   <tr
                     key={idx}
-                    className="hover:bg-gray-50/50 transition-colors"
+                    className="hover:bg-gray-50/50 transition-colors "
                   >
-                    <td className="py-3.5 font-bold text-gray-800">
+                    <td className="py-3.5 pl-4 font-bold text-gray-800">
                       {m.market}
                     </td>
                     <td className="py-3.5 text-gray-600 font-medium">
@@ -195,7 +195,7 @@ async function ProductDetailsContent({ id }: { id: string }) {
                     <td className="py-3.5 text-center font-bold text-gray-700">
                       {toBanglaNumber(m.max)} টাকা
                     </td>
-                    <td className="py-3.5 text-right font-extrabold text-gray-900">
+                    <td className="py-3.5 pr-4 text-right font-extrabold text-gray-900">
                       {toBanglaNumber(
                         marketAvg.endsWith(".00")
                           ? Math.round(Number(marketAvg))
@@ -214,11 +214,6 @@ async function ProductDetailsContent({ id }: { id: string }) {
   );
 }
 
-function ProductDetailsWrapper({ params }: ProductDetailsProps) {
-  const { id } = use(params);
-  return <ProductDetailsContent id={id} />;
-}
-
 export default function ProductDetails({ params }: ProductDetailsProps) {
   return (
     <div className="w-full min-h-screen py-6 bg-[#f7f8f6]">
@@ -229,7 +224,7 @@ export default function ProductDetails({ params }: ProductDetailsProps) {
           </div>
         }
       >
-        <ProductDetailsWrapper params={params} />
+        <ProductDetailsContent params={params} />
       </Suspense>
     </div>
   );

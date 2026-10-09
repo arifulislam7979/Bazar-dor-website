@@ -25,7 +25,6 @@ const PriceDown = async () => {
   const downProduct = filteredData.sort(
     (a, b) => a.change.pct - b.change.pct,
   );
-  console.log(downProduct);
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex items-center gap-2 mb-6">
