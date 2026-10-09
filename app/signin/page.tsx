@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { signIn } from "@/lib/auth-client";
+import { authClient, signIn } from "@/lib/auth-client";
 import { Form, Input, Label, TextField, Button } from "@heroui/react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { toast } from "sonner";
@@ -21,18 +21,28 @@ export default function SigninPage() {
       email: userData.email as string,
       password: userData.password as string,
       rememberMe: true,
-      callbackURL: '/'
+      callbackURL: "/",
     });
 
     setLoading(false);
 
     if (error) {
-      toast.error(error.message || "সাইন ইন করতে সমস্যা হয়েছে");
+      toast.error("সাইন ইন করতে সমস্যা হয়েছে");
     }
     if (data) {
       toast.success("সফলভাবে সাইন ইন হয়েছে!");
     }
   };
+  const handleGoogleSignin = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
+  };
+  const handleGithubSingin = async () => {
+      await authClient.signIn.social({
+        provider: "github",
+      });
+    };
 
   return (
     <div className="min-h-screen w-full bg-[#f4f7f4] flex flex-col items-center justify-center p-4">
@@ -51,7 +61,6 @@ export default function SigninPage() {
         <Form className="flex flex-col gap-4" onSubmit={handleSignin}>
           {/* Email Field */}
           <TextField
-            
             isRequired
             name="email"
             type="email"
@@ -107,6 +116,7 @@ export default function SigninPage() {
         {/* Social Buttons */}
         <div className="flex flex-col sm:flex-row gap-3">
           <button
+            onClick={handleGoogleSignin}
             type="button"
             className="flex-1 flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 py-2.5 px-3 rounded-xl text-xs font-bold text-gray-700 transition-colors cursor-pointer"
           >
@@ -117,6 +127,7 @@ export default function SigninPage() {
           </button>
 
           <button
+          onClick={handleGithubSingin}
             type="button"
             className="flex-1 flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 py-2.5 px-3 rounded-xl text-xs font-bold text-gray-700 transition-colors cursor-pointer"
           >
@@ -127,7 +138,6 @@ export default function SigninPage() {
           </button>
         </div>
 
-        {/* Account Create Link */}
         <p className="text-center text-xs text-gray-500 font-medium mt-6">
           অ্যাকাউন্ট নেই?
           <Link
@@ -139,7 +149,6 @@ export default function SigninPage() {
         </p>
       </div>
 
-      {/* Back to Home Link */}
       <Link
         href="/"
         className="text-xs text-gray-400 font-medium hover:text-gray-600 mt-6 transition-colors"

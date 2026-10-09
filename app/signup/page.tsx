@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { signUp } from "@/lib/auth-client";
+import { authClient, signUp } from "@/lib/auth-client";
 import { Form, Input, Label, TextField, Button } from "@heroui/react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { toast } from "sonner";
@@ -45,7 +45,16 @@ export default function SignUpPage() {
       }
     }
   };
-
+  const handleGoogleSignup = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
+  };
+  const handleGithubSingup = async () => {
+    await authClient.signIn.social({
+      provider: "github",
+    });
+  };
   return (
     <div className="min-h-screen w-full bg-[#f4f7f4] flex flex-col items-center justify-center p-4">
       <div className="text-center mb-6">
@@ -87,7 +96,6 @@ export default function SignUpPage() {
             />
           </TextField>
 
-          
           <TextField
             isRequired
             minLength={8}
@@ -124,7 +132,6 @@ export default function SignUpPage() {
             )}
           </div>
 
-          
           <Button
             type="submit"
             className="w-full bg-[#009944] hover:bg-[#008039] text-white font-bold py-3 rounded-xl transition-all shadow-md active:scale-[0.99] mt-2 text-xs sm:text-sm"
@@ -133,7 +140,6 @@ export default function SignUpPage() {
           </Button>
         </Form>
 
-        
         <div className="relative my-6 flex items-center justify-center">
           <div className="border-t border-gray-200 w-full" />
           <span className="bg-white px-3 text-[11px] text-gray-400 font-medium absolute">
@@ -141,9 +147,9 @@ export default function SignUpPage() {
           </span>
         </div>
 
-        
         <div className="flex flex-col sm:flex-row gap-3">
           <button
+            onClick={handleGoogleSignup}
             type="button"
             className="flex-1 flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 py-2.5 px-3 rounded-xl text-xs font-bold text-gray-700 transition-colors cursor-pointer"
           >
@@ -154,6 +160,7 @@ export default function SignUpPage() {
           </button>
 
           <button
+            onClick={handleGithubSingup}
             type="button"
             className="flex-1 flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 py-2.5 px-3 rounded-xl text-xs font-bold text-gray-700 transition-colors cursor-pointer"
           >
