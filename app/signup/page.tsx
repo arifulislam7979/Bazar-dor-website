@@ -87,7 +87,7 @@ export default function SignUpPage() {
             />
           </TextField>
 
-          {/* Password Field */}
+          
           <TextField
             isRequired
             minLength={8}
@@ -124,7 +124,7 @@ export default function SignUpPage() {
             )}
           </div>
 
-          {/* Submit Button */}
+          
           <Button
             type="submit"
             className="w-full bg-[#009944] hover:bg-[#008039] text-white font-bold py-3 rounded-xl transition-all shadow-md active:scale-[0.99] mt-2 text-xs sm:text-sm"
@@ -133,7 +133,7 @@ export default function SignUpPage() {
           </Button>
         </Form>
 
-        {/* Divider */}
+        
         <div className="relative my-6 flex items-center justify-center">
           <div className="border-t border-gray-200 w-full" />
           <span className="bg-white px-3 text-[11px] text-gray-400 font-medium absolute">
@@ -141,7 +141,7 @@ export default function SignUpPage() {
           </span>
         </div>
 
-        {/* Social Buttons */}
+        
         <div className="flex flex-col sm:flex-row gap-3">
           <button
             type="button"
