@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+BazarDor (বাজার দর)
 
-## Getting Started
+Short Description:
+BazarDor is a modern, responsive web application designed to track and display real-time agricultural commodity and grocery market prices across Bangladesh. It enables users to view daily price fluctuations, compare market prices across different divisions, browse dynamic categories, and access personalized user features through secure authentication.
 
-First, run the development server:
+Technologies Used:
+Frontend Framework: Next.js (App Router)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+UI & Styling: React, HeroUI, Tailwind CSS, React Icons
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Authentication: Better Auth (Email & Password, Google OAuth, GitHub OAuth)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Database & API Integration: MongoDB
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Notifications & UX: Sonner (Toast notifications)
 
-## Learn More
+Language & Runtime: TypeScript, JavaScript
 
-To learn more about Next.js, take a look at the following resources:
+Key Features:
+1. Dynamic Commodity Price Tracking: Real-time updates on daily market prices with visual indicators for price increases, decreases, and stability.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Division & Market Comparison: Comprehensive price breakdowns showing minimum, maximum, and average rates across different markets and divisions in Bangladesh.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Category Filtering: Smooth dynamic routing allowing users to filter products by categories (such as rice, lentils, oil, and vegetables).
 
-## Deploy on Vercel
+4. Secure Authentication & Social Login: Seamless sign-in and sign-up experience supporting email/password alongside Google and GitHub social logins via Better Auth.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Interactive User Profile Management: Personalized profile dashboard using HeroUI Popover components, enabling users to manage account details and sign out with instant feedback.
