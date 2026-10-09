@@ -8,7 +8,6 @@ interface CategoryPageProps {
   }>;
 }
 
-// Server Side Data Fetching Component
 async function CategoryContent({ categorySlug }: { categorySlug: string }) {
   const res = await fetch(
     `https://api.api-store.workers.dev/api/bazardor/products?category=${categorySlug}`,

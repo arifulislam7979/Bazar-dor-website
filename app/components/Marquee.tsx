@@ -36,6 +36,7 @@ export interface Product {
   yesterday: number;
   lastWeek: number;
   lastMonth: number;
+  icon: string
   change: PriceChange;
   markets: Market[];
 }

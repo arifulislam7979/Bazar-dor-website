@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Product } from "@/app/components/Marquee";
+import Link from "next/link";
 
 const toBanglaNumber = (num: number | string) => {
   const banglaDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
@@ -78,9 +79,10 @@ export default function CategoryProducts({ products }: CategoryProductsProps) {
           const isDown = product.change.dir === "down";
 
           return (
-            <div
-              key={product.id}
-              className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-4"
+            <Link key={product.id} href={`/product/${product.id}`}>
+              <div
+              
+              className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between gap-4 hover:border-green-500"
             >
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-2xl">
@@ -132,6 +134,7 @@ export default function CategoryProducts({ products }: CategoryProductsProps) {
                 </div>
               </div>
             </div>
+            </Link>
           );
         })}
       </div>

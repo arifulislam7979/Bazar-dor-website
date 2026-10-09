@@ -33,10 +33,12 @@ async function ProductDetailsContent({ id }: { id: string }) {
 
   const isUp = product.change?.dir === "up";
   const isDown = product.change?.dir === "down";
-  const priceDiff = Math.abs(product.today - product.yesterday);
 
-  // বাজার ডাটা থেকে সর্বনিম্ন, সর্বাধিক এবং গড় বের করা
-  const marketPrices = product.markets?.map((m) => (m.min + m.max) / 2) || [];
+  const diffRaw = product.today - product.yesterday;
+  const priceDiff = diffRaw < 0 ? -diffRaw : diffRaw;
+
+  const marketPrices = product.markets?.map((m) => (m.min + m.max) / 2);
+
   const minPrice = marketPrices.length
     ? Math.min(...product.markets.map((m) => m.min))
     : product.today;
@@ -60,7 +62,6 @@ async function ProductDetailsContent({ id }: { id: string }) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 space-y-6">
-      {/* ১. ব্রেডক্রাম্ব নেভিগেশন (Breadcrumb) */}
       <nav className="flex items-center gap-2 text-xs md:text-sm text-gray-500 font-medium">
         <Link href="/" className="hover:text-gray-900 transition-colors">
           হোম
@@ -76,7 +77,6 @@ async function ProductDetailsContent({ id }: { id: string }) {
         <span className="text-gray-800 font-semibold">{product.nameBn}</span>
       </nav>
 
-      {/* ২. টপ হেডার কার্ড (প্রোডাক্ট নেম ও আজকের দাম) */}
       <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center text-4xl">
@@ -90,16 +90,15 @@ async function ProductDetailsContent({ id }: { id: string }) {
               প্রতি {unitText} · {product.categoryNameBn}
             </p>
             <p className="text-xs text-gray-500 font-medium mt-2">
-              গতকালকের তুলনায় আজ দাম{" "}
+              গতকালকের তুলনায় আজ দাম
               <span className="font-bold text-gray-800">
-                {isUp ? "বেড়েছে" : isDown ? "কমেছে" : "একই আছে"}
-              </span>{" "}
+                {isUp ? " বেড়েছে" : isDown ? " কমেছে" : "একই আছে"}
+              </span>
               · {toBanglaNumber(priceDiff)} টাকা
             </p>
           </div>
         </div>
 
-        {/* আজকের দামের ব্যাজ */}
         <div className="bg-gray-50/80 border border-gray-100 rounded-2xl p-4 min-w-[140px] text-center self-stretch md:self-auto flex flex-col justify-center">
           <p className="text-[11px] text-gray-400 font-semibold mb-1">
             আজকের দাম
@@ -120,16 +119,14 @@ async function ProductDetailsContent({ id }: { id: string }) {
             }`}
           >
             <span>{isUp ? "▲" : isDown ? "▼" : "—"}</span>
-            <span>{toBanglaNumber(product.change?.pct?.toFixed(1) || 0)}%</span>
+            <span>{toBanglaNumber(product.change?.pct?.toFixed(1))}%</span>
           </div>
         </div>
       </div>
 
-      {/* ৩. দামের সারসংক্ষেপ (Summary Cards) */}
       <div className="space-y-3">
         <h2 className="text-base font-bold text-gray-900">দামের সারসংক্ষেপ</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* সর্বনিম্ন দাম */}
           <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm space-y-1">
             <p className="text-xs text-gray-500 font-medium">সর্বনিম্ন দাম</p>
             <p className="text-xl font-extrabold text-[#009944]">
@@ -140,7 +137,6 @@ async function ProductDetailsContent({ id }: { id: string }) {
             </p>
           </div>
 
-          {/* সর্বাধিক দাম */}
           <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm space-y-1">
             <p className="text-xs text-gray-500 font-medium">সর্বাধিক দাম</p>
             <p className="text-xl font-extrabold text-red-500">
@@ -151,7 +147,6 @@ async function ProductDetailsContent({ id }: { id: string }) {
             </p>
           </div>
 
-          {/* গড় দাম */}
           <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm space-y-1">
             <p className="text-xs text-gray-500 font-medium">গড় দাম</p>
             <p className="text-xl font-extrabold text-gray-800">
@@ -164,7 +159,6 @@ async function ProductDetailsContent({ id }: { id: string }) {
         </div>
       </div>
 
-      {/* ৪. বাজারভিত্তিক আজকের দাম (Table) */}
       <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm space-y-4">
         <h2 className="text-base font-bold text-gray-900">
           বাজারভিত্তিক আজকের দাম
@@ -220,13 +214,11 @@ async function ProductDetailsContent({ id }: { id: string }) {
   );
 }
 
-// React use() API দিয়ে Params Unpack করার Wrapper
 function ProductDetailsWrapper({ params }: ProductDetailsProps) {
   const { id } = use(params);
   return <ProductDetailsContent id={id} />;
 }
 
-// মূল এক্সপোর্ট কম্পোনেন্ট (Next.js 15 Non-async Pattern)
 export default function ProductDetails({ params }: ProductDetailsProps) {
   return (
     <div className="w-full min-h-screen py-6 bg-[#f7f8f6]">

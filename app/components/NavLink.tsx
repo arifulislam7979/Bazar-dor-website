@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Category } from "./Navbar";
+import { Product } from "./Marquee";
 
 interface NavLinkProps {
-  data: Category[];
+  data: Product[];
 }
 
 const NavLink = ({ data }: NavLinkProps) => {

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Marquee from "./components/Marquee";
 import Footer from "./components/Footer";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="bn"     
+      lang="bn"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className=" min-h-full flex flex-col">
@@ -31,7 +32,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Marquee></Marquee>
         {children}
         <Footer></Footer>
-        </body>
+        <Toaster position="top-center" richColors />
+      </body>
     </html>
   );
 }
