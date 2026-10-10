@@ -12,7 +12,7 @@ interface CategoryPageProps {
 async function CategoryContent({ params }: CategoryPageProps) {
   const {categorySlug} = await params
   const res = await fetch(
-    `https://api.api-store.workers.dev/api/bazardor/products?category=${categorySlug}`,
+    `https://openapi.programming-hero.com/api/bazardor/products?category=${categorySlug}`,
     { next: { revalidate: 3600 } },
   );
   if (!res.ok) {

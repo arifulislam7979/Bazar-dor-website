@@ -13,7 +13,7 @@ const toBanglaNumber = (num: number | string) => {
 
 const PriceDown = async () => {
   const res = await fetch(
-    "https://api.api-store.workers.dev/api/bazardor/products",
+    "https://openapi.programming-hero.com/api/bazardor/products",
     { next: { revalidate: 3600 } },
   );
   const productData: Product[] = await res.json();

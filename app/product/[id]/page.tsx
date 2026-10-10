@@ -19,7 +19,7 @@ const toBanglaNumber = (num: number | string) => {
 async function ProductDetailsContent({ params }: ProductDetailsProps) {
   const { id } = await params;
   const res = await fetch(
-    `https://api.api-store.workers.dev/api/bazardor/products/${id}`,
+    `https://openapi.programming-hero.com/api/bazardor/products/${id}`,
     { next: { revalidate: 3600 } },
   );
 
@@ -203,7 +203,7 @@ async function ProductDetailsContent({ params }: ProductDetailsProps) {
                         marketAvg.endsWith(".00")
                           ? Math.round(Number(marketAvg))
                           : marketAvg,
-                      )}{" "}
+                      )}{' '}
                       টাকা
                     </td>
                   </tr>
