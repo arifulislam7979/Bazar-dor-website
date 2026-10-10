@@ -1,4 +1,4 @@
-import {Suspense } from "react";
+import { Suspense } from "react";
 import Link from "next/link";
 import { Product } from "@/app/components/Marquee";
 import { notFound } from "next/navigation";
@@ -17,14 +17,14 @@ const toBanglaNumber = (num: number | string) => {
 };
 
 async function ProductDetailsContent({ params }: ProductDetailsProps) {
-  const {id} = await params
+  const { id } = await params;
   const res = await fetch(
     `https://api.api-store.workers.dev/api/bazardor/products/${id}`,
     { next: { revalidate: 3600 } },
   );
 
   if (!res.ok) {
-    notFound()
+    notFound();
   }
 
   const product: Product = await res.json();
@@ -178,10 +178,13 @@ async function ProductDetailsContent({ params }: ProductDetailsProps) {
             <tbody className="divide-y divide-[#6F7771]">
               {product.markets?.map((m, idx) => {
                 const marketAvg = ((m.min + m.max) / 2).toFixed(2);
+                const isEven = idx % 2 === 0;
                 return (
                   <tr
                     key={idx}
-                    className="hover:bg-gray-50/50 transition-colors "
+                    className={`transition-colors  ${
+                      isEven ? "bg-white" : "bg-[#F0F5F0]"
+                    }`}
                   >
                     <td className="py-3.5 pl-4 font-bold text-gray-800">
                       {m.market}

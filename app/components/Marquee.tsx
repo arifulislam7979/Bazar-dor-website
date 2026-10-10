@@ -51,7 +51,7 @@ const Marquee = async () => {
   return (
     <div className=" bg-gray-50 py-2 border-y border-gray-100">
       <MarqueeText
-        className="max-w-7xl mx-auto px-4 flex items-center gap-8"
+        className="max-w-7xl mx-auto flex items-center gap-2"
         direction="right"
         duration={10}
       >

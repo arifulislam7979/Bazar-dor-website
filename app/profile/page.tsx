@@ -22,7 +22,7 @@ export default function ProfilePage() {
       if (user?.name) {
         setName(user.name);
       }
-    });
+    },0);
     return ()=> clearTimeout(timer)
   }, [user]);
 
